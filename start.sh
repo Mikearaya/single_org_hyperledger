@@ -62,3 +62,6 @@ docker exec -it cli bash
 # peer channel join -b bionicchannel.block
 
 # peer channel update -o orderer.bionic.com:7050 -c bionicchannel -f ./channel-artifacts/Org1MSPanchors.tx --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/bionic.com/tlsca/tlsca.bionic.com-cert.pem
+
+# peer chaincode install -n papercontract -v 0 -p /opt/gopath/src/github.com/chaincode -l node
+# peer chaincode instantiate -n papercontract -v 0 -l node -c '{"Args":["org.papernet.commercialpaper:instantiate"]}' -C bionicchannel -P "AND ('Org1MSP.member')" --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/bionic.com/orderers/orderer.bionic.com/msp/tlscacerts/tlsca.bionic.com-cert.pem
