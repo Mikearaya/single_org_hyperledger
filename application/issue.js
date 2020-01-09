@@ -17,8 +17,10 @@ SPDX-License-Identifier: Apache-2.0
 // Bring key classes into scope, most importantly Fabric SDK network class
 const fs = require('fs');
 const yaml = require('js-yaml');
+
+// brings two key Hyperledger Fabric SDK classes into scope – Wallet and Gatewa
 const { FileSystemWallet, Gateway } = require('fabric-network');
-const CommercialPaper = require('../contract/lib/paper.js');
+const CommercialPaper = require('../chaincode/lib/paper');
 
 // A wallet stores a collection of identities for use
 //const wallet = new FileSystemWallet('../user/isabella/wallet');
@@ -26,77 +28,80 @@ const wallet = new FileSystemWallet('../identity/user/isabella/wallet');
 
 // Main program function
 async function main() {
+  // A gateway defines the peers used to access Fabric networks
+  const gateway = new Gateway();
 
-    // A gateway defines the peers used to access Fabric networks
-    const gateway = new Gateway();
+  // Main try/catch block
+  try {
+    // Specify userName for network access
+    // const userName = 'isabella.issuer@magnetocorp.com';
+    const userName = 'User1@org1.bionic.com';
 
-    // Main try/catch block
-    try {
+    // Load connection profile; will be used to locate a gateway
+    let connectionProfile = yaml.safeLoad(
+      fs.readFileSync('../gateway/networkConnection.yaml', 'utf8')
+    );
 
-        // Specify userName for network access
-        // const userName = 'isabella.issuer@magnetocorp.com';
-        const userName = 'User1@org1.example.com';
+    // Set connection options; identity and wallet
+    let connectionOptions = {
+      identity: userName,
+      wallet: wallet,
+      discovery: { enabled: true, asLocalhost: true }
+    };
 
-        // Load connection profile; will be used to locate a gateway
-        let connectionProfile = yaml.safeLoad(fs.readFileSync('../gateway/networkConnection.yaml', 'utf8'));
+    // Connect to gateway using application specified parameters
+    console.log('Connect to Fabric gateway.');
 
-        // Set connection options; identity and wallet
-        let connectionOptions = {
-            identity: userName,
-            wallet: wallet,
-            discovery: { enabled:false, asLocalhost: true }
-        };
+    await gateway.connect(connectionProfile, connectionOptions);
 
-        // Connect to gateway using application specified parameters
-        console.log('Connect to Fabric gateway.');
+    // Access PaperNet network
+    console.log('Use network channel: bionicchannel.');
 
-        await gateway.connect(connectionProfile, connectionOptions);
+    const network = await gateway.getNetwork('bionicchannel');
+    console.error('error occured');
 
-        // Access PaperNet network
-        console.log('Use network channel: mychannel.');
+    // Get addressability to commercial paper contract
+    console.log('Use org.papernet.commercialpaper smart contract.');
 
-        const network = await gateway.getNetwork('mychannel');
+    const contract = await network.getContract('papercontract');
 
-        // Get addressability to commercial paper contract
-        console.log('Use org.papernet.commercialpaper smart contract.');
+    // issue commercial paper
+    console.log('Submit commercial paper issue transaction.');
 
-        const contract = await network.getContract('papercontract');
+    const issueResponse = await contract.submitTransaction(
+      'issue',
+      'MagnetoCorp',
+      '00001',
+      '2020-05-31',
+      '2020-11-30',
+      '5000000'
+    );
 
-        // issue commercial paper
-        console.log('Submit commercial paper issue transaction.');
+    // process response
+    console.log('Process issue transaction response.' + issueResponse);
 
-        const issueResponse = await contract.submitTransaction('issue', 'MagnetoCorp', '00001', '2020-05-31', '2020-11-30', '5000000');
+    let paper = CommercialPaper.fromBuffer(issueResponse);
 
-        // process response
-        console.log('Process issue transaction response.'+issueResponse);
-
-        let paper = CommercialPaper.fromBuffer(issueResponse);
-
-        console.log(`${paper.issuer} commercial paper : ${paper.paperNumber} successfully issued for value ${paper.faceValue}`);
-        console.log('Transaction complete.');
-
-    } catch (error) {
-
-        console.log(`Error processing transaction. ${error}`);
-        console.log(error.stack);
-
-    } finally {
-
-        // Disconnect from the gateway
-        console.log('Disconnect from Fabric gateway.');
-        gateway.disconnect();
-
-    }
+    console.log(
+      `${paper.issuer} commercial paper : ${paper.paperNumber} successfully issued for value ${paper.faceValue}`
+    );
+    console.log('Transaction complete.');
+  } catch (error) {
+    console.log(`Error processing transaction. ${error}`);
+    console.log(error.stack);
+  } finally {
+    // Disconnect from the gateway
+    console.log('Disconnect from Fabric gateway.');
+    gateway.disconnect();
+  }
 }
-main().then(() => {
-
+main()
+  .then(() => {
     console.log('Issue program complete.');
-
-}).catch((e) => {
-
+  })
+  .catch(e => {
     console.log('Issue program exception.');
     console.log(e);
     console.log(e.stack);
     process.exit(-1);
-
-});
+  });

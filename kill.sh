@@ -12,4 +12,4 @@ COMPOSE_FILE_CA=docker-compose-ca.yaml
 
 docker-compose -f $COMPOSE_FILE -f $COMPOSE_FILE_COUCH -f $COMPOSE_FILE_KAFKA -f $COMPOSE_FILE_RAFT2 -f $COMPOSE_FILE_CA down --volumes --remove-orphans
 
-rm -rf ./channel-artifacts/* ./crypto-config/*
+rm -rf ./channel-artifacts/* ./crypto-config/* ./identity/*

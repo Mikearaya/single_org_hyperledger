@@ -17,6 +17,6 @@
 /ledgers-backup
 /channel-artifacts/*.json
 /org3-artifacts/crypto-config/*
-
+/identity
 ./docker-compose-e2e-template.yaml
 connection-org*
