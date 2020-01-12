@@ -1,7 +1,12 @@
+export FABRIC_CA_CLIENT_HOME=$PWD/ca_client
+export FABRIC_CA_SERVER_HOME=$PWD/ca_server
+
 cryptogen generate --config=config/crypto-config.yaml
 
-./ccp-generate.sh
+fabric-ca-server start -b admin:adminpw -p 7059 &
 
+./ccp-generate.sh
+echo $FABRIC_CA_CLIENT_HOME
 cp templates/docker-compose-e2e-template.yaml docker-compose-e2e.yaml
 
 # The next steps will replace the template's contents with the
@@ -65,3 +70,7 @@ docker exec -it cli bash
 
 # peer chaincode install -n papercontract -v 0 -p /opt/gopath/src/github.com/chaincode -l node
 # peer chaincode instantiate -n papercontract -v 0 -l node -c '{"Args":["org.papernet.commercialpaper:instantiate"]}' -C bionicchannel -P "AND ('Org1MSP.member')" --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/bionic.com/orderers/orderer.bionic.com/msp/tlscacerts/tlsca.bionic.com-cert.pem
+
+# peer chaincode invoke -o orderer.bionic.com:7050 -C bionicchannel -n papercontract --peerAddresses peer0.org1.bionic.com:7051 --peerAddresses peer1.org1.bionic.com:8051 -c '{"Args":["issue","MagnetoCorp","00001","2020-05-31", "2020-11-30", "5000000"]}'
+
+# run addToWallet.js

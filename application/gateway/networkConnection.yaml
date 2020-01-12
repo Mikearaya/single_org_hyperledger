@@ -14,7 +14,7 @@ name: 'basic-network'
 # the "x-type" property with the "hlfv1" value bionic below is used by Hyperledger Composer to
 # determine the type of Fabric networks (v0.6 vs. v1.0) it needs to work with.
 #
-x-type: 'hlfv1'
+type: 'hlfv1'
 
 #
 # Describe what the target network is/does.
@@ -82,7 +82,7 @@ organizations:
     # dynamic certificate management (enroll, revoke, re-enroll). The following section is only for
     # Fabric-CA servers.
     certificateAuthorities:
-      - ca-org1
+      - ca0
 
 #
 # List of orderers to send transaction and channel create/update requests to. For the time
@@ -91,7 +91,7 @@ organizations:
 #
 orderers:
   orderer.bionic.com:
-    url: grpc://localhost:7050
+    url: grpcs://localhost:7050
 
     # these are standard properties defined by the gRPC library
     # they will be passed in as-is to gRPC client constructor
@@ -105,7 +105,7 @@ orderers:
 peers:
   peer0.org1.bionic.com:
     # this URL is used to send endorsement and query requests
-    url: grpc://localhost:7051
+    url: grpcs://localhost:7051
 
     grpcOptions:
       ssl-target-name-override: peer0.org1.bionic.com
@@ -117,7 +117,7 @@ peers:
 #
 certificateAuthorities:
   ca-org1:
-    url: http://localhost:7054
+    url: https://localhost:7055
     # the properties specified under this object are passed to the 'http' client verbatim when
     # making the request to the Fabric-CA server
     httpOptions:

@@ -14,12 +14,12 @@ name: 'basic-network'
 # the "x-type" property with the "hlfv1" value bionic below is used by Hyperledger Composer to
 # determine the type of Fabric networks (v0.6 vs. v1.0) it needs to work with.
 #
-x-type: 'hlfv1'
+type: 'hlfv1'
 
 #
 # Describe what the target network is/does.
 #
-description: 'The basic network'
+description: 'Single organization network'
 
 #
 # Schema version of the content. Used by the SDK to apply the corresponding parsing rules.
@@ -116,7 +116,7 @@ peers:
 # Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
 #
 certificateAuthorities:
-  ca-org1:
+  ca.org1.bionic.com:
     url: http://localhost:7054
     # the properties specified under this object are passed to the 'http' client verbatim when
     # making the request to the Fabric-CA server

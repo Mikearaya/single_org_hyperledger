@@ -16,6 +16,7 @@ SPDX-License-Identifier: Apache-2.0
 
 // Bring key classes into scope, most importantly Fabric SDK network class
 const fs = require('fs');
+var path = require('path');
 const yaml = require('js-yaml');
 
 // brings two key Hyperledger Fabric SDK classes into scope – Wallet and Gatewa
@@ -41,23 +42,47 @@ async function main() {
     let connectionProfile = yaml.safeLoad(
       fs.readFileSync('../gateway/networkConnection.yaml', 'utf8')
     );
+    /* 
+    const clientCert = fs.readFileSync(
+      __dirname,
+      path.join(
+        '../crypto-config/peerOrganizations/org1.bionic.com/users/User1@org1.bionic.com/tls/client.crt'
+      )
+    );
 
+    const clientKey = fs.readFileSync(
+      __dirname,
+      path.join(
+        '../crypto-config/peerOrganizations/org1.bionic.com/users/User1@org1.bionic.com/tls/client.key'
+      ),
+      'utf8'
+    ); */
     // Set connection options; identity and wallet
     let connectionOptions = {
       identity: userName,
       wallet: wallet,
-      discovery: { enabled: true, asLocalhost: true }
+      discovery: { enabled: false, asLocalhost: true }
     };
 
     // Connect to gateway using application specified parameters
     console.log('Connect to Fabric gateway.');
 
     await gateway.connect(connectionProfile, connectionOptions);
+    console.log(await gateway.getClient().getMspid());
+
+    /* 
+    const client = gateway.getClient();
+
+    client.setTlsClientCertAndKey(
+      Buffer.from(clientCert).toString(),
+      Buffer.from(clientKey).toString()
+    ); */
 
     // Access PaperNet network
     console.log('Use network channel: bionicchannel.');
 
     const network = await gateway.getNetwork('bionicchannel');
+
     console.error('error occured');
 
     // Get addressability to commercial paper contract
@@ -71,7 +96,7 @@ async function main() {
     const issueResponse = await contract.submitTransaction(
       'issue',
       'MagnetoCorp',
-      '00001',
+      '00002',
       '2020-05-31',
       '2020-11-30',
       '5000000'

@@ -187,7 +187,7 @@ peers:
 # Certificate Authority instead of Fabric-CA, in which case this section would not be specified.
 #
 certificateAuthorities:
-  ca-org1:
+  ca.org1.bionic.com:
     url: https://localhost:7054
     # the properties specified under this object are passed to the 'http' client verbatim when
     # making the request to the Fabric-CA server
@@ -202,4 +202,4 @@ certificateAuthorities:
       - enrollId: admin
         enrollSecret: adminpw
     # [Optional] The optional name of the CA.
-    caName: ca-magnetocorp
+    caName: ca-org1
