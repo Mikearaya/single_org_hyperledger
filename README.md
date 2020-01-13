@@ -16,9 +16,11 @@ before starting this network make sure you have all the [prerequesits](https://h
 - After all the required images are pulled the network will automatically start with all the components ready including *one system channel **bionic-sys-channel**, one organization channel **bionicchannel**, two peers with smart contract installed and instantiated on the channel* and ready to accept `invoke` & `query` requests.
 - To be able to call the chaincode installed on the peers from the client go to **crypto-config/peerOrganizations/org1.bionic.com/users/User1@org1.bionic.com/msp/keystore** and copy the *_sk* file name. after coping the file name navigate back to **application/addToWallet.js** and change the old keystore value by the new one you just copied example if the *_sk* file you just copied id **c0e8c3086d60a13d8f5939c154140de750cc4b573866ddea05b5957d81896c62_sk**  find the line that reads the user key  
                  
-                  `const key = fs.readFileSync( path.join(credPath, '/msp/keystore/08c777eb48abed92fa2fce336153382e5f695382113b4cc30b54c39b68ea5b9b_sk')).toString();`
-    and change it to 
-    `const key = fs.readFileSync( path.join(credPath, '/msp/keystore/`**c0e8c3086d60a13d8f5939c154140de750cc4b573866ddea05b5957d81896c62_sk**`')).toString();`
+`const key = fs.readFileSync( path.join(credPath,'/msp/keystore/08c777eb48abed92fa2fce336153382e5f695382113b4cc30b54c39b68ea5b9b_sk')).toString();`
+
+ and change it to 
+ 
+`const key = fs.readFileSync( path.join(credPath, '/msp/keystore/`**c0e8c3086d60a13d8f5939c154140de750cc4b573866ddea05b5957d81896c62_sk**`')).toString();`
 
 save the new change and go to your terminal and navigate to the **application/** folder from the root directory.
 
