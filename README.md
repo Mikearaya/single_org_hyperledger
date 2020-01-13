@@ -33,6 +33,7 @@ To shut down the network and turn of the containers got to the root directory of
 
 **bring network up with previous config**
 - next time you decide to bring it back up with out changing the initial configuration simply run `./start.sh`
+
 **recreate new config and bring the network up**
 - if you want to recreate new configuration file and bring the network back up follow the steps from the **getting started** section from the 3rd point forward.
 
