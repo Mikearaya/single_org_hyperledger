@@ -84,8 +84,6 @@ async function main() {
 
     const network = await gateway.getNetwork('bionicchannel');
 
-    console.error('error occured');
-
     // Get addressability to commercial paper contract
     console.log('Use org.papernet.commercialpaper smart contract.');
 
@@ -97,7 +95,7 @@ async function main() {
     const issueResponse = await contract.submitTransaction(
       'issue',
       'MagnetoCorp',
-      '00002',
+      '00003',
       '2020-05-31',
       '2020-11-30',
       '5000000'
