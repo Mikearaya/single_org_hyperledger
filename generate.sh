@@ -1,11 +1,11 @@
-export FABRIC_CA_CLIENT_HOME=$PWD/ca_client
-export FABRIC_CA_SERVER_HOME=$PWD/ca_server
+#export FABRIC_CA_CLIENT_HOME=$PWD/ca_client
+#export FABRIC_CA_SERVER_HOME=$PWD/ca_server
 
 rm -rf ./channel-artifacts/* ./crypto-config/* ./identity/*
 
 cryptogen generate --config=config/crypto-config.yaml
 
-fabric-ca-server start -b admin:adminpw -p 7059 &
+#fabric-ca-server start -b admin:adminpw -p 7059 &
 
 ./ccp-generate.sh
 echo $FABRIC_CA_CLIENT_HOME

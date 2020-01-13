@@ -61,11 +61,11 @@
           'certificateAuthorities': ['ca.org1.bionic.com'],
           'adminPrivateKey':
             {
-              'path': '../crypto-config/peerOrganizations/org1.bionic.com/users/Admin@org1.bionic.com/msp/keystore/bda9352062ea97201a346981a867a344b4b0cbc429045dbf67a6dad4ffc10f61_sk',
+              'path': '../../crypto-config/peerOrganizations/org1.bionic.com/users/Admin@org1.bionic.com/msp/keystore/d71b6dd2965a235cd3de7735d498c530c980db1ecb812230a9a36ad1c34dff3f_sk',
             },
           'signedCert':
             {
-              'path': '../crypto-config/peerOrganizations/org1.bionic.com/users/Admin@org1.bionic.com/msp/signcerts/Admin@org1.bionic.com-cert.pem',
+              'path': '../../crypto-config/peerOrganizations/org1.bionic.com/users/Admin@org1.bionic.com/msp/signcerts/Admin@org1.bionic.com-cert.pem',
             },
         },
     },
@@ -81,7 +81,7 @@
             },
           'tlsCACerts':
             {
-              'path': '../crypto-config/ordererOrganizations/bionic.com/orderers/orderer.bionic.com/tls/ca.crt',
+              'path': '../../crypto-config/ordererOrganizations/bionic.com/orderers/orderer.bionic.com/tls/ca.crt',
             },
         },
     },
@@ -98,7 +98,8 @@
             },
           'tlsCACerts':
             {
-              'path': '../crypto-config/peerOrganizations/org1.bionic.com/peers/peer0.org1.bionic.com/tls/ca.crt',
+              'path': '../../crypto-config/peerOrganizations/org1.bionic.com/peers/peer0.org1.bionic.com/tls/ca.crt',
+              'path': '../../crypto-config/peerOrganizations/org1.bionic.com/peers/peer1.org1.bionic.com/tls/ca.crt',
             },
         },
       'peer1.org1.bionic.com':
@@ -109,22 +110,24 @@
             { 'ssl-target-name-override': 'peer1.org1.bionic.com' },
           'tlsCACerts':
             {
-              'path': '../crypto-config/peerOrganizations/org1.bionic.com/peers/peer0.org1.bionic.com/tls/ca.crt',
+              'path': '../../crypto-config/peerOrganizations/org1.bionic.com/peers/peer0.org1.bionic.com/tls/ca.crt',
+              'path': '../../crypto-config/peerOrganizations/org1.bionic.com/peers/peer1.org1.bionic.com/tls/ca.crt',
             },
         },
     },
   'certificateAuthorities':
     {
-      'ca-org1':
+      'ca.bionic.com':
         {
           'url': 'https://localhost:7054',
           'httpOptions': { 'verify': true },
           'tlsCACerts':
             {
-              'path': '../crypto-config/peerOrganizations/org1.bionic.com/peers/peer0.org1.bionic.com/tls/ca.crt',
+              'path': '../../crypto-config/peerOrganizations/org1.bionic.com/peers/peer0.org1.bionic.com/tls/ca.crt',
+              'path': '../../crypto-config/peerOrganizations/org1.bionic.com/peers/peer1.org1.bionic.com/tls/ca.crt',
             },
           'registrar': [{ 'enrollId': 'admin', 'enrollSecret': 'adminpw' }],
-          'caName': 'ca-org1',
+          'caName': 'ca.bionic.com',
         },
     },
 }

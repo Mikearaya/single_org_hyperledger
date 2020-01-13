@@ -16,12 +16,12 @@ SPDX-License-Identifier: Apache-2.0
 
 // Bring key classes into scope, most importantly Fabric SDK network class
 const fs = require('fs');
-var path = require('path');
+
 const yaml = require('js-yaml');
 
 // brings two key Hyperledger Fabric SDK classes into scope – Wallet and Gatewa
 const { FileSystemWallet, Gateway } = require('fabric-network');
-const CommercialPaper = require('../chaincode/lib/paper');
+const CommercialPaper = require('../chaincode/lib/paper.js');
 
 // A wallet stores a collection of identities for use
 //const wallet = new FileSystemWallet('../user/isabella/wallet');
@@ -40,8 +40,9 @@ async function main() {
 
     // Load connection profile; will be used to locate a gateway
     let connectionProfile = yaml.safeLoad(
-      fs.readFileSync('../gateway/networkConnection.yaml', 'utf8')
+      fs.readFileSync('gateway/networkConnection.yaml', 'utf8')
     );
+
     /* 
     const clientCert = fs.readFileSync(
       __dirname,
@@ -61,7 +62,7 @@ async function main() {
     let connectionOptions = {
       identity: userName,
       wallet: wallet,
-      discovery: { enabled: false, asLocalhost: true }
+      discovery: { enabled: true, asLocalhost: true }
     };
 
     // Connect to gateway using application specified parameters

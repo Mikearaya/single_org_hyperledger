@@ -31,7 +31,7 @@ async function main() {
       .readFileSync(
         path.join(
           credPath,
-          '/msp/keystore/6087d0fa5b91d96917941d63074b04295513469327f6cb1f2dcae11b62f86f1e_sk'
+          '/msp/keystore/c0e8c3086d60a13d8f5939c154140de750cc4b573866ddea05b5957d81896c62_sk'
         )
       )
       .toString();
