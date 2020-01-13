@@ -27,3 +27,13 @@ save the new change and go to your terminal and navigate to the **application/**
 - finally generate the user credetials by running the script `node addToWallet.js` if all goes well you should see out put saying **done.**, next issue your first `invokation` by running `node issue.js`
 
 congratulation!!!! you just runed and executed a chaincode on my single organization network. 
+
+3. ### Bringing down the network
+To shut down the network and turn of the containers got to the root directory of the project and run the shell script `./kill.sh` from the terminal window. now all the nodes are down.
+
+**bring network up with previous config**
+- next time you decide to bring it back up with out changing the initial configuration simply run `./start.sh`
+**recreate new config and bring the network up**
+- if you want to recreate new configuration file and bring the network back up follow the steps from the **getting started** section from the 3rd point forward.
+
+*Thank you for checking out my demo network feel free to make pull requests or fork this project*
