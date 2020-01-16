@@ -1,0 +1,139 @@
+Organizations:
+  - &OrdererOrg
+    Name: OrdererMSP
+    ID: OrdererMSP
+    MSPDir: ../crypto-config/ordererOrganizations/bionic.com/msp
+    Policies: &OrdererOrgPolicies
+      Readers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('OrdererMSP.admin')"
+  - &Org1
+    Name: Org1MSP
+    ID: Org1MSP
+    MSPDir: ../crypto-config/peerOrganizations/org1.bionic.com/msp
+    Policies: &Org1Policies
+      Readers:
+        Type: Signature
+        Rule: "OR('Org1MSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('Org1MSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('Org1MSP.admin')"
+    AnchorPeers:
+      - Host: peer0.org1.bionic.com
+        Port: 7051
+
+Capabilities:
+  Channel: &ChannelCapabilities
+    V1_1: true
+  Orderer: &OrdererCapabilities
+    V1_1: true
+  Application: &ApplicationCapabilities
+    V1_2: true
+    V1_1: false
+
+Application: &ApplicationDefaults
+
+
+  Organizations:
+
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: 'ANY Readers'
+    Writers:
+      Type: ImplicitMeta
+      Rule: 'ANY Writers'
+    Admins:
+      Type: ImplicitMeta
+      Rule: 'MAJORITY Admins'
+    Org1MemberPolicy:
+      Type: Signature
+      Rule: "OR('Org1MSP.member')"
+
+  Capabilities:
+    <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+  OrdererType: solo
+  Addresses:
+    - orderer.bionic.com:7050
+  BatchTimeout: 2s
+  BatchSize:
+    MaxMessageCount: 10
+    AbsoluteMaxBytes: 98 MB
+    PreferredMaxBytes: 512 KB
+  MaxChannels: 0
+  Kafka:
+    Brokers:
+
+  Organizations:
+
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: 'ANY Readers'
+    Writers:
+      Type: ImplicitMeta
+      Rule: 'ANY Writers'
+    Admins:
+      Type: ImplicitMeta
+      Rule: 'MAJORITY Admins'
+    BlockValidation:
+      Type: ImplicitMeta
+      Rule: 'ANY Writers'
+
+  Capabilities:
+    <<: *OrdererCapabilities
+
+Channel: &ChannelDefaults
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: 'ANY Readers'
+    Writers:
+      Type: ImplicitMeta
+      Rule: 'ANY Writers'
+    Admins:
+      Type: ImplicitMeta
+      Rule: 'MAJORITY Admins'
+
+  Capabilities:
+    <<: *ChannelCapabilities
+
+Profiles:
+  OneOrgOrdererGenesis:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+        - <<: *OrdererOrg
+          Policies:
+            <<: *OrdererOrgPolicies
+            Admins:
+              Type: Signature
+              Rule: "OR('OrdererMSP.member')"
+    Consortiums:
+      SampleConsortium:
+        Organizations:
+          - <<: *Org1
+            Policies:
+              <<: *Org1Policies
+              Admins:
+                Type: Signature
+                Rule: "OR('Org1MSP.member')"
+
+  OneOrgChannel:
+    Consortium: SampleConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *Org1

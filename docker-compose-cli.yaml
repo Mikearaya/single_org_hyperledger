@@ -1,8 +1,3 @@
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
-
 version: '2'
 
 volumes:
@@ -74,6 +69,7 @@ services:
     command: /bin/bash
     volumes:
       - /var/run/:/host/var/run/
+      - ./chain_test:/opt/gopath/src/github.com/test
       - ./chaincode/:/opt/gopath/src/github.com/chaincode
       - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts

@@ -41,11 +41,7 @@ function tlsDisable() {
         cli \
         peer chaincode install -n papercontract -v 0 -p /opt/gopath/src/github.com/chaincode -l node
 
-    docker exec -e "CORE_PEER_LOCALMSPID=$CORE_PEER_LOCALMSPID" \
-        -e "CORE_PEER_MSPCONFIGPATH=$CORE_PEER_MSPCONFIGPATH" \
-        -e "CORE_PEER_TLS_ROOTCERT_FILE=$CORE_PEER_TLS_ROOTCERT_FILE" \
-        -e "CORE_PEER_ADDRESS=$CORE_PEER_ADDRESS" \
-        cli \
+    docker exec cli \
         peer chaincode instantiate -n papercontract -v 0 -l node -c '{"Args":["org.papernet.commercialpaper:instantiate"]}' -C bionicchannel -P "AND ('Org1MSP.member')"
     sleep 5
     docker exec cli peer chaincode invoke -o orderer.bionic.com:7050 -C bionicchannel -n papercontract --peerAddresses peer0.org1.bionic.com:7051 -c '{"Args":["issue","MagnetoCorp","00001","2020-05-31", "2020-11-30", "5000000"]}'
