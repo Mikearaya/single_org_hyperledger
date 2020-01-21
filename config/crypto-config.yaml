@@ -15,3 +15,12 @@ PeerOrgs:
       # Hostname: {{.Prefix}}{{.Index}} # default
     Users:
       Count: 1
+  - Name: Org2
+    Domain: org2.bionic.com
+    EnableNodeOUs: false
+    Template:
+      Count: 2
+      # Start: 5
+      # Hostname: {{.Prefix}}{{.Index}} # default
+    Users:
+      Count: 1
