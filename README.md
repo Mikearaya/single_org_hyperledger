@@ -1,13 +1,20 @@
 
 # Single organization hyperledger network configuration
-1. ### Introduction
+
+## Introduction
 This is a test for single organization hyperledger network. the nework was built on hyperledger fabric v1.4, it consistes
 - one orderer
 - on certeficate authority (fabric-ca)
 - two peers (one anchor)
 - one test chain code
 
-2. ### Getting Started
+
+## Built With
+
+- HTML
+- CSS
+
+## Getting Started
 before starting this network make sure you have all the [prerequesits](https://hyperledger-fabric.readthedocs.io/en/latest/prereqs.html) and ensure you have the necessary dependencies installed on your machine. once you have installed all the dependencies of a hyperledger faric network follow this steps:
 - clone this repository to your favorite location using `git clone https://github.com/Mikearaya/single_org_hyperledger`
 - after the cloning process complete enter the folder
@@ -28,7 +35,7 @@ save the new change and go to your terminal and navigate to the **application/**
 
 congratulation!!!! you just runed and executed a chaincode on my single organization network. 
 
-3. ### Bringing down the network
+## Bringing down the network
 To shut down the network and turn of the containers got to the root directory of the project and run the shell script `./kill.sh` from the terminal window. now all the nodes are down.
 
 **bring network up with previous config**
@@ -38,3 +45,25 @@ To shut down the network and turn of the containers got to the root directory of
 - if you want to recreate new configuration file and bring the network back up follow the steps from the **getting started** section from the 3rd point forward.
 
 *Thank you for checking out my demo network feel free to make pull requests or fork this project*
+
+## Authors
+
+👤 **Mikael Araya**
+
+- Github: [@mikearaya](https://github.com/mikearaya)
+- Twitter: [@mikearaya12](https://twitter.com/mikearaya12)
+- Linkedin: [linkedin](https://linkedin.com/in/mikael-araya)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+
+Feel free to check the [issues page](issues/).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## 📝 License
+
+This project is [MIT](lic.url) licensed.
